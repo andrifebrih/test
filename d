@@ -1,3 +1,18 @@
+ajaxPost("/generatedashboard/createsummaryintrareceiver", "", function (res){
+ console.log(res);
+    })
+
+ajaxPost("/generatedashboard/createsummaryintrasupplier", "", function (res){
+ console.log(res);
+    })
+
+ajaxPost("/generatedashboard/createclassification", "", function (res){
+ console.log(res);
+    })
+
+
+
+
 if prefix == "OP" {
    		actLine := []string{"Total Cost - ex restructuring", "OP excl. restr"}
    		Where.Set("act_line", tk.M{}.Set("$in", actLine))
