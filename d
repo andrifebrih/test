@@ -1,3 +1,7 @@
+ajaxPost("/generatedashboard/gbshub", "", function (res){
+ console.log(res);
+    })
+
 ajaxPost("/generatedashboard/createsummaryintrareceiver", "", function (res){
  console.log(res);
     })
