@@ -1,3 +1,13 @@
+ajaxPost("/generatedashboard/manualsummaryexternalreceiver", "", function (res){
+ console.log(res);
+    })
+    
+    
+ ajaxPost("/generatedashboard/manualsummaryexternalsupplier", "", function (res){
+ console.log(res);
+    })
+
+
 ajaxPost("/generatedashboard/gbshub", "", function (res){
  console.log(res);
     })
