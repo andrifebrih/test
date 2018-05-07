@@ -9,13 +9,16 @@
    {  
       "$group":{  
          "_id":{  
-            "isin":"$isin",
             "issue_date":"$issue_date",
             "issuer":"$issuer",
-            "security":"$security"
+            "security":"$security",
+            "type":"$type"
          },
          "allEach":{  
             "$max":"$deal_size_mil"
+         },
+         "eachAllocType":{  
+            "$sum":"$allocated_base"
          },
          "firmEach":{  
             "$sum":"$firm"
@@ -30,15 +33,20 @@
    },
    {  
       "$group":{  
-         "_id":"$_id.isin",
+         "TypeAlloc":{  
+            "$sum":"$eachAllocType"
+         },
+         "_id":{  
+            "geographic":"$geographic",
+            "investor":"$investor",
+            "issue_date":"$_id.issue_date",
+            "issuer":"$_id.issuer",
+            "security":"$_id.security"
+         },
          "list":{  
             "$push":{  
-               "geographic":"$geographic",
-               "investor":"$investor",
-               "isin":"$_id.isin",
-               "issue_date":"$_id.issue_date",
-               "issuer":"$_id.issuer",
-               "security":"$_id.security"
+               "eachAllocType":"$eachAllocType",
+               "type":"$_id.type"
             }
          },
          "orderbook":{  
