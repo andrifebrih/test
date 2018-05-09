@@ -1,0 +1,36 @@
+{  
+   "IsError":false,
+   "Message":"Get Data Success",
+   "Total":0,
+   "Data":[  
+      {  
+         "_id":"Others",
+         "value":17.057569296375267
+      },
+      {  
+         "_id":"Investor Funds",
+         "value":20.255863539445627
+      },
+      {  
+         "_id":"Insurance and Pension",
+         "value":17.48400852878465
+      },
+      {  
+         "_id":"Corporate",
+         "value":7.036247334754798
+      },
+      {  
+         "_id":"Banks",
+         "value":20.68230277185501
+      },
+      {  
+         "_id":"Private Banks",
+         "value":17.48400852878465
+      }
+   ],
+   "LineData":null,
+   "GridData":null,
+   "Summary":null,
+   "StartTime":"2018-05-09T22:50:25.150023656+08:00",
+   "Action":"Get Data"
+}
