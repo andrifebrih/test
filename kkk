@@ -1,1 +1,7 @@
 {"Name":[],"IssuerTicker":[],"Security":["INDOIS 3.4 03/29/21","INDOIS 3.4 03/29/22"],"Region":[],"Country":[],"Industry":[],"Rating":[],"Currency":[],"Distributionsformat":[],"issue_date_from":"","issue_date_to":"","FiCorpSov":[],"DistributionType":[],"SpecialCharacter":[],"BaselClassification":[],"MaturityType":[],"size_from":"","size_to":"","CountryListing":[],"Ranking":[],"Investorcountry":[],"InvestorNameFilter":[],"InvestorIndustry":[],"Geographytype":"","Geographyvalue":0,"Investortype":"","Investorvalue":0,"Box":"Distribution Statistic","Flag":"InvestorType","skip":0,"sort":[],"take":10}
+
+
+-----------
+
+[{"$match":{"issuer":{"$ne":""},"security":{"$in":["INDOIS 3.4 03/29/21","INDOIS 3.4 03/29/22"]}}},{"$group":{"_id":{"issue_date":"$issue_date","issuer":"$issuer","security":"$security"},"orderbook":{"$max":"$dist_stats_orderbook_mil_base"},"size":{"$max":"$deal_size_mil_base"}}},{"$group":{"TotalRow":{"$sum":1},"_id":"","ob":{"$max":"$orderbook"},"sz":{"$max":"$size"}}}] +++++COUNT+++++
+[{"$match":{"issuer":{"$ne":""},"security":{"$in":["INDOIS 3.4 03/29/21","INDOIS 3.4 03/29/22"]}}},{"$group":{"_id":{"issue_date":"$issue_date","issuer":"$issuer","security":"$security"},"orderbook":{"$max":"$dist_stats_orderbook_mil_base"},"size":{"$max":"$deal_size_mil_base"}}},{"$project":{"_id":0,"issue_date":"$_id.issue_date","issuer":"$_id.issuer","orderbook":"$orderbook","security":"$_id.security","size":"$size"}},{"$sort":{"security":1}},{"$limit":10},{"$skip":0}]
