@@ -1,84 +1,77 @@
-db.secondarymarket.aggregate(
 [  
    {  
       "$match":{  
-         "DateInt":{  
-            "$gt":20180902,
-            "$lte":20181202
+         "allocated":{  
+            "$gt":0
          },
-         "Status":{  
-            "$eq":"DONE"
-         }
-      }
-   },
-   {  
-      "$project":{  
-         "BuyorSell":1,
-         "Continent":1,
-         "CounterParty":1,
-         "Country":1,
-         "ISIN":1,
-         "Industry":1,
-         "Issuer":1,
-         "Multiplier":1,
-         "Region":1,
-         "Value":1,
-         "volumebuy":{  
-            "$cond":{  
-               "else":{  
-                  "$divide":[  
-                     {  
-                        "$multiply":[  
-                           "$Value",
-                           "$Multiplier"
-                        ]
-                     },
-                     100000000
-                  ]
-               },
-               "if":{  
-                  "$eq":[  
-                     "$BuyorSell",
-                     "BUY"
-                  ]
-               },
-               "then":0
-            }
+         "issuer":{  
+            "$ne":""
          },
-         "volumesell":{  
-            "$cond":{  
-               "else":0,
-               "if":{  
-                  "$eq":[  
-                     "$BuyorSell",
-                     "BUY"
-                  ]
-               },
-               "then":{  
-                  "$divide":[  
-                     {  
-                        "$multiply":[  
-                           "$Value",
-                           "$Multiplier"
-                        ]
-                     },
-                     100000000
-                  ]
-               }
-            }
+         "rating":{  
+            "$in":[  
+               "AAA"
+            ]
          }
       }
    },
    {  
       "$group":{  
-         "_id":"",
-         "sumBuy":{  
-            "$sum":"$volumebuy"
+         "_id":{  
+            "country":"$country",
+            "currency":"$currency",
+            "id":"$investor_name",
+            "type":"$type"
          },
-         "sumSell":{  
-            "$sum":"$volumesell"
+         "allocated":{  
+            "$sum":"$allocated"
+         },
+         "allocated_base":{  
+            "$sum":"$allocated_base"
+         },
+         "firm":{  
+            "$sum":"$firm"
          }
       }
+   },
+   {  
+      "$project":{  
+         "_id":1,
+         "allocated":1,
+         "allocated_base":1,
+         "firm":1,
+         "percentage":{  
+            "$cond":[  
+               {  
+                  "$eq":[  
+                     "$firm",
+                     0
+                  ]
+               },
+               "$firm",
+               {  
+                  "$multiply":[  
+                     {  
+                        "$divide":[  
+                           "$allocated",
+                           "$firm"
+                        ]
+                     },
+                     100
+                  ]
+               }
+            ]
+         }
+      }
+   },
+   {  
+      "$sort":{  
+         "allocated_base":-1
+      }
+   },
+   {  
+      "$limit":15
+   },
+   {  
+      "$skip":0
    }
 ]
-)
