@@ -75,3 +75,76 @@
       "$skip":0
    }
 ]
+
+/////////////////////////////////////////
+[  
+   {  
+      "$match":{  
+         "allocated":{  
+            "$gt":0
+         },
+         "issuer":{  
+            "$ne":""
+         },
+         "rating":{  
+            "$in":[  
+               "AAA"
+            ]
+         }
+      }
+   },
+   {  
+      "$group":{  
+         "_id":{  
+            "country":"$country",
+            "currency":"$currency",
+            "id":"$investor_name",
+            "type":"$type"
+         },
+         "allocated":{  
+            "$sum":"$allocated"
+         },
+         "allocated_base":{  
+            "$sum":"$allocated_base"
+         },
+         "firm":{  
+            "$sum":"$firm"
+         }
+      }
+   },
+   {  
+      "$project":{  
+         "_id":1,
+         "allocated":1,
+         "allocated_base":1,
+         "firm":1,
+         "percentage":{  
+            "$cond":[  
+               {  
+                  "$eq":[  
+                     "$firm",
+                     0
+                  ]
+               },
+               "$firm",
+               {  
+                  "$multiply":[  
+                     {  
+                        "$divide":[  
+                           "$allocated",
+                           "$firm"
+                        ]
+                     },
+                     100
+                  ]
+               }
+            ]
+         }
+      }
+   },
+   {  
+      "$sort":{  
+         "allocated_base":-1
+      }
+   }
+]
