@@ -1,0 +1,2 @@
+mongoexport --host host --port port -u mongotmpap --password psswd --authenticationDatabase admin --db ROBADEV --collection $1 --type=csv --fie
+ldFile /data/shared/dump/fields/$1.txt --out /data/shared/dump/export/$1.csv
